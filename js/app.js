@@ -19,10 +19,6 @@ var listItems = document.querySelectorAll('.card i');
  *   - add each card's HTML to the page
  */
 
- //Creating document fragment
- const fragment = document.createDocumentFragment();
-
-
 //Looping through all the cards to add dynamic icons
  for(let i=0;i<listItems.length;i++){
  	listItems[i].setAttribute('class',icons[i]);
@@ -54,3 +50,15 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+//Getting all the cards list
+const cardList = document.querySelectorAll('.card');
+for(let i=0;i<cardList.length;i++){
+	cardList[i].addEventListener('click',showCard);
+}
+
+//Showing the card when clicked
+function showCard(event){
+	var clickedCard = event.target;
+	clickedCard.setAttribute('class','card open show');
+}
