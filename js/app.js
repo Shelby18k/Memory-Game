@@ -27,7 +27,6 @@ var listItems = document.querySelectorAll('.card i');
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
-    console.log("Hello");
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -51,14 +50,62 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+ let openCards = new Array();
+let match = 0;
+
 //Getting all the cards list
 const cardList = document.querySelectorAll('.card');
 for(let i=0;i<cardList.length;i++){
 	cardList[i].addEventListener('click',showCard);
 }
 
-//Showing the card when clicked
+
+//Adding open and show class to the clicked card
+function displayCard(clickedCard){
+	openCards.push(clickedCard);
+	clickedCard.classList.add("open","show");
+}
+
+//Adding match class to the matched cards
+function cardsMatched(){
+	openCards[0].classList.add("match");
+	openCards[1].classList.add("match");
+	openCards = [];
+}
+
+//When no match is found
+function noMatch(){
+
+	setTimeout(function(){
+		openCards[0].classList.toggle("shake");
+		openCards[1].classList.toggle("shake");
+	},300);
+
+	setTimeout(function(){
+		openCards[0].classList.remove("open","show");
+		openCards[1].classList.remove("open","show");
+		openCards[0].classList.toggle("shake");
+		openCards[1].classList.toggle("shake");
+		openCards = [];
+	},900);
+}
+
+//Click event listener function
+
 function showCard(event){
-	var clickedCard = event.target;
-	clickedCard.setAttribute('class','card open show');
+	let clickedCard = event.target;
+	if(!clickedCard.classList.contains("open")){
+
+		if(openCards.length < 2){
+			displayCard(clickedCard);
+		}
+
+		if(openCards.length === 2){
+			if(openCards[0].innerHTML.trim() === openCards[1].innerHTML.trim()){
+				cardsMatched();
+			}else{
+				 noMatch();
+			}
+		}	
+	}
 }

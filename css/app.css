@@ -63,10 +63,12 @@ h1 {
     justify-content: center;
     align-items: center;
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+    transform: rotateY(180deg);
+    transition: all 0.3s ease-in-out;
 }
 
 .deck .card.open {
-    transform: rotateY(0);
+    transform: rotateY(0deg);
     background: #02b3e4;
     cursor: default;
 }
@@ -75,11 +77,62 @@ h1 {
     font-size: 33px;
 }
 
+/*
+ *
+ *Animation of popping
+ */
+
+@keyframes popping{
+    from {
+        transform: scale(1.4,1.4);
+    }
+    to{
+        transform: scale(1,1);
+    }
+}
+
+/*
+ *Animation for shaking
+ */
+
+ @keyframes shaking{
+    0%{
+        transform: skewX(0deg);
+    }
+
+    25%{
+        transform: skewX(25deg);
+    }
+
+    50%{
+        transform: skewX(-25deg);
+    }
+
+    75%{
+        transform: skewX(10deg);
+    }
+
+    100%{
+        transform: skewX(0deg);
+    }
+ }
+
 .deck .card.match {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+    animation-name: popping;
+    animation-duration: 0.3s;
+    animation-iteration-count: 2;
 }
+
+.deck .card.shake{
+    background-color: rgba(220,0,0,0.6);
+    animation-name: shaking;
+    animation-duration: 0.3s;
+    animation-iteration-count: 2;
+}
+
 
 /*
  * Styles for the Score Panel
