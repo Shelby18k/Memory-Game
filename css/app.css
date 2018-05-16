@@ -235,3 +235,8 @@ h1 {
     background-color:  #000;
     color: white;
 }
+
+.timer-container{
+    margin-left: 17px;
+    display: inline-block;
+}

@@ -22,7 +22,26 @@ let count = 0;
 let stars = document.querySelector('.stars');
 stars.style.cssText = "color: rgba(0,0,0,0.6);";
 
-//Variable to store number of matches
+//Variable for timer
+	let timerValue = 0;
+	let minutes = 0;
+	let seconds = 0;
+	let timerDiv = document.querySelector('.timer');
+	let interval;
+
+//Function for timer	
+function startTimer(){
+	timerDiv.textContent = minutes + " Minutes " + seconds + " Seconds";
+	interval = setInterval(function(){
+		seconds++;
+		timerDiv.textContent = minutes + " Minutes " + seconds + " Seconds";
+		if(seconds == 60){
+			minutes++;
+			seconds = 0;
+			timerDiv.textContent = minutes + " Minutes " + seconds + " Seconds";
+		}
+	},1000);
+}
 
 /*
  * Display the cards on the page
@@ -133,6 +152,7 @@ function addStars(){
 }
 
 function youWon(){
+	matchedCards = 0;
 	let overlay = document.querySelector('.overlay');
 	let modal = document.querySelector('.modal');
 	let tick = document.querySelector('.tick');
@@ -146,6 +166,12 @@ function youWon(){
 //Click event listener function
 
 function showCard(event){
+	//Condition for Starting the Timer
+	if(openCards.length === 0 && timerValue == 0){
+		startTimer();
+		timerValue = 1;
+	}
+
 	let clickedCard = event.target;
 	if(!clickedCard.classList.contains("open") && clickedCard.className === "card"){
 
@@ -186,8 +212,16 @@ function showCard(event){
 }
 
 function startGameOnceAgain(){
+	//Initializing the timer Variables
+	minutes = 0;
+	seconds = 0;
+	timerValue = 0;
+	timerDiv.textContent = "";
+	clearInterval(interval);
 	icons = shuffle(icons);
 	var listItems = document.querySelectorAll('.card i');
+
+	openCards = [];
 
  //Getting all the cards list
 const cardList = document.querySelectorAll('.card');
