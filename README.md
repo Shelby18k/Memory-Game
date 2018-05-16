@@ -12,3 +12,6 @@ A very friendly game built using javascript
 * A counter is also managed to keep hold track of the number of moves you have played.
 * There's also reset button, to restart your game
 * The game also has the feature of showing the leaderboard
+
+## Contributions
+Anyone interested can easily contribute to the project and if found bug please let me know
