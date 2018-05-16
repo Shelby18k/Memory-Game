@@ -12,6 +12,16 @@ icons = shuffle(icons);
 
 var listItems = document.querySelectorAll('.card i');
 
+//Selecting the moves class
+var moves = document.querySelector('.moves');
+var numberOfMoves = 0;
+
+//Selecting the stars
+let stars = document.querySelector('.stars');
+stars.style.cssText = "color: rgba(0,0,0,0.6);";
+
+//Variable to store number of matches
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -90,6 +100,20 @@ function noMatch(){
 	},900);
 }
 
+
+//Function to increment number of moves
+function incrementMoves(){
+	numberOfMoves += 1;
+	moves.innerHTML = numberOfMoves;
+}
+
+
+//Function to remove Stars based on user's performance
+function removeStars(){
+	let firstStar = document.querySelector('.fa-star');
+	firstStar.remove();
+}
+
 //Click event listener function
 
 function showCard(event){
@@ -98,14 +122,23 @@ function showCard(event){
 
 		if(openCards.length < 2){
 			displayCard(clickedCard);
+			// incrementMoves();
 		}
 
 		if(openCards.length === 2){
 			if(openCards[0].innerHTML.trim() === openCards[1].innerHTML.trim()){
 				cardsMatched();
+				incrementMoves();
 			}else{
 				 noMatch();
+				 incrementMoves();
 			}
+		}
+
+		if(numberOfMoves === 3 && openCards.length === 2){
+			removeStars();
+		}else if (numberOfMoves === 7 && openCards.length === 2) {
+			removeStars();
 		}	
 	}
 }
