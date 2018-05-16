@@ -16,6 +16,7 @@ var listItems = document.querySelectorAll('.card i');
 var moves = document.querySelector('.moves');
 var numberOfMoves = 0;
 let matchedCards = 0;
+let count = 0;
 
 //Selecting the stars
 let stars = document.querySelector('.stars');
@@ -131,7 +132,16 @@ function addStars(){
 					   "<li><i class='fa fa-star'></i></li>";
 }
 
-
+function youWon(){
+	let overlay = document.querySelector('.overlay');
+	let modal = document.querySelector('.modal');
+	let tick = document.querySelector('.tick');
+	overlay.style.cssText = "visibility: visible;";
+	modal.style.cssText = "visibility: visible";
+	tick.classList.add("rotate");
+	let numberMoves = document.querySelector('.total-moves-number');
+	numberMoves.innerHTML = "<b>" + numberOfMoves + "</b>";
+}
 
 //Click event listener function
 
@@ -158,15 +168,18 @@ function showCard(event){
 			}
 		}
 
-		if(numberOfMoves === 14 && openCards.length === 2){
+		if(numberOfMoves === 10 && count === 0){
 			removeStars();
-		}else if (numberOfMoves === 21 && openCards.length === 2) {
+			count = 1;
+		}
+		 if (numberOfMoves === 14 && count === 1 ) {
 			removeStars();
+			count =0;
 		}
 	}
 
 	if(matchedCards === 8){
-		youWon(); //To be implemented
+		youWon();
 	}
 
 
@@ -196,4 +209,13 @@ const cardList = document.querySelectorAll('.card');
 let restart = document.querySelector('.restart');
 restart.addEventListener('click',function(){
 	startGameOnceAgain();
+});
+
+let playAgain = document.querySelector('.play-again');
+playAgain.addEventListener('click',function(){
+	startGameOnceAgain();
+	let overlay = document.querySelector('.overlay');
+	let modal = document.querySelector('.modal');
+	overlay.style.cssText = "visibility: hidden;";
+	modal.style.cssText = "visibility: hidden";
 });
