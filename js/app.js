@@ -15,6 +15,7 @@ var listItems = document.querySelectorAll('.card i');
 //Selecting the moves class
 var moves = document.querySelector('.moves');
 var numberOfMoves = 0;
+let matchedCards = 0;
 
 //Selecting the stars
 let stars = document.querySelector('.stars');
@@ -81,6 +82,7 @@ function displayCard(clickedCard){
 function cardsMatched(){
 	openCards[0].classList.add("match");
 	openCards[1].classList.add("match");
+	matchedCards++;
 	openCards = [];
 }
 
@@ -107,9 +109,11 @@ function noMatch(){
 
 
 //Function to increment number of moves
-function incrementMoves(){
+function incrementMoves(clickedCard){
+	if(clickedCard.classList.contains("open")){
 	numberOfMoves += 1;
 	moves.innerHTML = numberOfMoves;
+	}
 }
 
 
@@ -119,6 +123,16 @@ function removeStars(){
 	firstStar.remove();
 }
 
+//Adding stars again on restart
+function addStars(){
+	let stars = document.querySelector('.stars');
+	stars.innerHTML = "<li><i class='fa fa-star'></i></li>" + 
+					   "<li><i class='fa fa-star'></i></li>" + 
+					   "<li><i class='fa fa-star'></i></li>";
+}
+
+
+
 //Click event listener function
 
 function showCard(event){
@@ -127,29 +141,59 @@ function showCard(event){
 
 		if(openCards.length < 2){
 			displayCard(clickedCard);
-			// incrementMoves();
 		}
 
 		if(openCards.length === 2){
 			if(openCards[0].innerHTML.trim() === openCards[1].innerHTML.trim()){
 				if(typeof openCards[0] !== 'undefined' && typeof openCards[1] !== 'undefined'){
-					console.log(typeof openCards[0] + "match");
 					cardsMatched();
+					incrementMoves(clickedCard);
 			}
-				incrementMoves();
+				
 			}else{
 				if(typeof openCards[0] !== 'undefined' && typeof openCards[1] !== 'undefined'){
-					console.log(typeof openCards[0] + "NO match");
 				 	noMatch();
+				 	incrementMoves(clickedCard);
 				}
-				 incrementMoves();
 			}
 		}
 
-		if(numberOfMoves === 3 && openCards.length === 2){
+		if(numberOfMoves === 14 && openCards.length === 2){
 			removeStars();
-		}else if (numberOfMoves === 7 && openCards.length === 2) {
+		}else if (numberOfMoves === 21 && openCards.length === 2) {
 			removeStars();
-		}	
+		}
 	}
+
+	if(matchedCards === 8){
+		youWon(); //To be implemented
+	}
+
+
 }
+
+function startGameOnceAgain(){
+	icons = shuffle(icons);
+	var listItems = document.querySelectorAll('.card i');
+
+ //Getting all the cards list
+const cardList = document.querySelectorAll('.card');
+
+//Looping through all the cards to add dynamic icons
+ for(let i=0;i<listItems.length;i++){
+ 	listItems[i].setAttribute('class',icons[i]);
+ 	cardList[i].setAttribute('class',"");
+ 	cardList[i].classList.add("card");
+ 	numberOfMoves = 0;
+ 	moves.innerHTML = numberOfMoves;
+ 	addStars();
+ }
+
+
+}
+
+
+let restart = document.querySelector('.restart');
+restart.addEventListener('click',function(){
+	startGameOnceAgain();
+});
