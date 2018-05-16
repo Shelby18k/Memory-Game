@@ -65,10 +65,11 @@ let match = 0;
 
 //Getting all the cards list
 const cardList = document.querySelectorAll('.card');
+const iconsList = document.querySelectorAll('.card i');
 for(let i=0;i<cardList.length;i++){
-	cardList[i].addEventListener('click',showCard);
+	cardList[i].addEventListener('click',showCard,true);
+	iconsList[i].addEventListener('click', showCard,true);
 }
-
 
 //Adding open and show class to the clicked card
 function displayCard(clickedCard){
@@ -87,16 +88,20 @@ function cardsMatched(){
 function noMatch(){
 
 	setTimeout(function(){
+		
 		openCards[0].classList.toggle("shake");
 		openCards[1].classList.toggle("shake");
+		
 	},300);
 
 	setTimeout(function(){
+		if(typeof openCards[0] !== 'undefined' && typeof openCards[1] !== 'undefined'){
 		openCards[0].classList.remove("open","show");
 		openCards[1].classList.remove("open","show");
-		openCards[0].classList.toggle("shake");
-		openCards[1].classList.toggle("shake");
+		openCards[0].classList.remove("shake");
+		openCards[1].classList.remove("shake");
 		openCards = [];
+		}
 	},900);
 }
 
@@ -118,7 +123,7 @@ function removeStars(){
 
 function showCard(event){
 	let clickedCard = event.target;
-	if(!clickedCard.classList.contains("open")){
+	if(!clickedCard.classList.contains("open") && clickedCard.className === "card"){
 
 		if(openCards.length < 2){
 			displayCard(clickedCard);
@@ -127,10 +132,16 @@ function showCard(event){
 
 		if(openCards.length === 2){
 			if(openCards[0].innerHTML.trim() === openCards[1].innerHTML.trim()){
-				cardsMatched();
+				if(typeof openCards[0] !== 'undefined' && typeof openCards[1] !== 'undefined'){
+					console.log(typeof openCards[0] + "match");
+					cardsMatched();
+			}
 				incrementMoves();
 			}else{
-				 noMatch();
+				if(typeof openCards[0] !== 'undefined' && typeof openCards[1] !== 'undefined'){
+					console.log(typeof openCards[0] + "NO match");
+				 	noMatch();
+				}
 				 incrementMoves();
 			}
 		}
