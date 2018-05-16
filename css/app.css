@@ -266,6 +266,7 @@ h1 {
     background-color: #5dade2;
     transition: all 0.5s ease-in-out;
     overflow-y: auto;
+    height: 800px;
 }
 
 .overlay2{
@@ -274,6 +275,7 @@ h1 {
     left: 0;
     bottom: 0;
     right: 0;
+    height: 800px;
     background: rgba(0,0,0,0.6);
     visibility: hidden;
     z-index: 2;

@@ -1,8 +1,7 @@
 /*
  * Create a list that holds all of your cards
  */
-localStorage.setItem("users",0);
-
+console.log("Hey " + localStorage.length);
 //Creation of a list of all the icons classes
 var icons = new Array('fa fa-diamond','fa fa-paper-plane-o','fa fa-anchor','fa fa-bolt',
 						'fa fa-cube','fa fa-anchor','fa fa-leaf','fa fa-bicycle','fa fa-diamond',
@@ -170,8 +169,11 @@ function youWon(){
 	let numberMoves = document.querySelector('.total-moves-number');
 	numberMoves.innerHTML = "<b>" + numberOfMoves + "</b>";
 	let valueOfUsers = localStorage.getItem("users");
-	users = parseInt(users);
-	localStorage.setItem("users",++users);
+	console.log("Getting value " + valueOfUsers);
+	valueOfUsers = parseInt(valueOfUsers);
+	valueOfUsers += 1;
+	localStorage.setItem("users",valueOfUsers);
+	console.log("Setting value ", localStorage.getItem("users"));
 	localStorage.setItem(valueOfUsers,numberOfMoves);
 	// console.log(localStorage.getItem("moves"+users));
 	let moves = document.querySelector('.moves');
