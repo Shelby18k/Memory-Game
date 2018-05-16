@@ -240,3 +240,97 @@ h1 {
     margin-left: 17px;
     display: inline-block;
 }
+
+.leaderBoard{
+    position: absolute;
+    z-index: 1;
+    width: 200px;
+    height: 100px;
+    background-color: #000;
+    right: 0%;
+    top: 10%;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.leaderBoard h3{
+    transform: translateY(15px);
+}
+
+.scoreBoard{
+    position: absolute;
+    z-index: 3;
+    width: 0px;
+    height: 100%;
+    background-color: #5dade2;
+    transition: all 0.5s ease-in-out;
+    overflow-y: auto;
+}
+
+.overlay2{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0,0,0,0.6);
+    visibility: hidden;
+    z-index: 2;
+}
+
+.main-heading{
+    transform: translateY(10px);
+    visibility: hidden;
+}
+
+.ruler{
+    background-color: #000;
+    width: 280px;
+    height: 3px;
+    visibility: hidden;
+}
+
+.user-list{
+    margin: 30px;
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    z-index: 2;
+    box-sizing: border-box;
+    border-left: 5px solid #f0776c; 
+    padding: 10px;
+    visibility: hidden;
+}
+
+.user-list:hover{
+     border-bottom: 0px;
+     color: #fff;
+}
+
+.user-list:after { 
+  content: "";
+  height: 100%; 
+  left: 0; 
+  top: 0; 
+  width: 0px;  
+  position: absolute; 
+  transition: all 0.3s ease 0s; 
+  -webkit-transition: all 0.3s ease 0s; 
+  z-index: -1;
+  visibility: hidden;
+}
+
+.user-list:hover:after{
+    width: 100%;
+}
+
+.user-list:after{
+    background: #f0776c;
+}
+
+.hide{
+    transform: translateX(-65px);
+    margin-top: 100px;
+}
+

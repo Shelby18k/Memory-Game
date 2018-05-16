@@ -1,6 +1,7 @@
 /*
  * Create a list that holds all of your cards
  */
+localStorage.setItem("users",0);
 
 //Creation of a list of all the icons classes
 var icons = new Array('fa fa-diamond','fa fa-paper-plane-o','fa fa-anchor','fa fa-bolt',
@@ -29,6 +30,10 @@ stars.style.cssText = "color: rgba(0,0,0,0.6);";
 	let timerDiv = document.querySelector('.timer');
 	let interval;
 
+//ScoreBoard
+let scoreboard = document.querySelector('.scoreBoard');
+let users = 0;
+
 //Function for timer	
 function startTimer(){
 	timerDiv.textContent = minutes + " Minutes " + seconds + " Seconds";
@@ -42,6 +47,9 @@ function startTimer(){
 		}
 	},1000);
 }
+
+
+//For local storage
 
 /*
  * Display the cards on the page
@@ -161,6 +169,13 @@ function youWon(){
 	tick.classList.add("rotate");
 	let numberMoves = document.querySelector('.total-moves-number');
 	numberMoves.innerHTML = "<b>" + numberOfMoves + "</b>";
+	let valueOfUsers = localStorage.getItem("users");
+	users = parseInt(users);
+	localStorage.setItem("users",++users);
+	localStorage.setItem(valueOfUsers,numberOfMoves);
+	// console.log(localStorage.getItem("moves"+users));
+	let moves = document.querySelector('.moves');
+	loadScores();
 }
 
 //Click event listener function
@@ -253,3 +268,74 @@ playAgain.addEventListener('click',function(){
 	overlay.style.cssText = "visibility: hidden;";
 	modal.style.cssText = "visibility: hidden";
 });
+
+
+
+function loadScores(){
+		let string = "<center><h2 class='main-heading'>LeaderBoard</h2></center>" + 
+		"<hr class='ruler'>";
+		console.log("Length of local " + localStorage.length)
+		for(let i=0;i<localStorage.length;i++){
+			let key = localStorage.key(i);
+			if(key !== "users"){
+			console.log("Keys " + key)
+			let val = localStorage.getItem(localStorage.key(i));
+			// let newDiv = document.createElement('div');
+			// newDiv.classList.add('user-list');
+			// let newSpan1 = document.createElement('span');
+			// let newSpan2 = document.createElement('span');
+			// newSpan1.textContent = "User - " + (i+1);
+			// newSpan2.textContent = "Moves: " + val;
+			// newDiv.append(newSpan1);
+			// newDiv.append(newSpan2);
+			// scoreboard.append(newDiv);
+
+			string += "<div class='user-list'>"+
+					"<span>User - "+ (i)+"</span>"+
+					"<span>Moves: "+ val+"</span>"+
+					"</div>";
+	}
+		}
+		scoreboard.innerHTML = string;
+
+		let mainHeading = document.querySelector('.main-heading');
+		let ruler = document.querySelector('.ruler');
+		let hide = document.querySelector('.hide');
+
+		let userList = document.querySelectorAll('.user-list');
+//Adding click Listener to LeaderBoard
+let leaderboard = document.querySelector('.leaderBoard');
+leaderboard.addEventListener('click',function(){
+	let overlay = document.querySelector('.overlay2');
+	scoreboard.style.cssText = "width: 350px";
+	overlay.style.cssText = "visibility: visible;";
+	mainHeading.style.cssText = "visibility:visible;";
+	ruler.style.cssText = "visibility: visible;";
+	// hide.style.cssText = "transform: translateX(0px);";
+	
+	//looping through all the scores
+	for(let i=0;i<userList.length;i++){
+		userList[i].style.cssText = "visibility: visible;";
+	}
+
+});
+
+let overlay2 = document.querySelector('.overlay2');
+overlay2.addEventListener('click',function(){
+	overlay2.style.cssText = "visibility: hidden";
+	scoreboard.style.cssText = "width: 0px";
+	mainHeading.style.cssText = "visibility:hidden;";
+	ruler.style.cssText = "visibility: hidden;";
+	// hide.style.cssText = "visibility:hidden;";
+
+	//looping through all the scores
+	for(let i=0;i<userList.length;i++){
+		userList[i].style.cssText = "visibility: hidden;";
+	}
+});
+
+
+
+}
+loadScores();
+

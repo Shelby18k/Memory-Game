@@ -1,20 +1,14 @@
 # Memory Game Project
-
+A very friendly game built using javascript
 ## Table of Contents
 
 * [Instructions](#instructions)
 * [Contributing](#contributing)
 
 ## Instructions
-
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
-
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+* Whenever you click a card they flip over revealing their icon
+* Opening the second card matches the card with previous one, if matched it pops out else it shakes
+* A timer is is set whenever you start playing the game
+* A counter is also managed to keep hold track of the number of moves you have played.
+* There's also reset button, to restart your game
+* The game also has the feature of showing the leaderboard
