@@ -1,20 +1,23 @@
 /*
  * Create a list that holds all of your cards
  */
-console.log("Hey " + localStorage.length);
 //Creation of a list of all the icons classes
-var icons = new Array('fa fa-diamond','fa fa-paper-plane-o','fa fa-anchor','fa fa-bolt',
-						'fa fa-cube','fa fa-anchor','fa fa-leaf','fa fa-bicycle','fa fa-diamond',
-						'fa fa-bomb','fa fa-leaf','fa fa-bomb','fa fa-bolt','fa fa-bicycle','fa fa-paper-plane-o',
-						'fa fa-cube');
+let icons = new Array('fa fa-diamond','fa fa-paper-plane-o','fa fa-anchor','fa fa-bolt',
+						'fa fa-cube','fa fa-leaf','fa fa-bicycle',
+						'fa fa-bomb',
+						);
+icons = icons.concat(icons);
 icons = shuffle(icons);
 
 
-var listItems = document.querySelectorAll('.card i');
+let listItems = document.querySelectorAll('.card i');
+
+//For stars
+let starsModal = 3;
 
 //Selecting the moves class
-var moves = document.querySelector('.moves');
-var numberOfMoves = 0;
+let moves = document.querySelector('.moves');
+let numberOfMoves = 0;
 let matchedCards = 0;
 let count = 0;
 
@@ -64,7 +67,7 @@ function startTimer(){
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -159,6 +162,14 @@ function addStars(){
 }
 
 function youWon(){
+	//Initializing the timer variables
+	minutes = 0;
+	seconds = 0;
+	timerValue = 0;
+	let timerModal = timerDiv.textContent;
+	timerDiv.textContent = "";
+	clearInterval(interval);
+
 	matchedCards = 0;
 	let overlay = document.querySelector('.overlay');
 	let modal = document.querySelector('.modal');
@@ -167,15 +178,18 @@ function youWon(){
 	modal.style.cssText = "visibility: visible";
 	tick.classList.add("rotate");
 	let numberMoves = document.querySelector('.total-moves-number');
+	//For stars
+	let starsNumbers = document.querySelector('.total-stars-number');
+	//For timer
+	let timerNumbers = document.querySelector('.total-time-number');
+	timerNumbers.innerHTML = "<b>" + timerModal + "</b";
+	starsNumbers.innerHTML = "<b>" + starsModal + "</b>";
 	numberMoves.innerHTML = "<b>" + numberOfMoves + "</b>";
 	let valueOfUsers = localStorage.getItem("users");
-	console.log("Getting value " + valueOfUsers);
 	valueOfUsers = parseInt(valueOfUsers);
 	valueOfUsers += 1;
 	localStorage.setItem("users",valueOfUsers);
-	console.log("Setting value ", localStorage.getItem("users"));
 	localStorage.setItem(valueOfUsers,numberOfMoves);
-	// console.log(localStorage.getItem("moves"+users));
 	let moves = document.querySelector('.moves');
 	loadScores();
 }
@@ -214,10 +228,14 @@ function showCard(event){
 		if(numberOfMoves === 10 && count === 0){
 			removeStars();
 			count = 1;
+			starsModal--
+			console.log("Stars " + starsModal);
 		}
 		 if (numberOfMoves === 14 && count === 1 ) {
 			removeStars();
 			count =0;
+			starsModal--;
+			console.log("Stars " + starsModal);
 		}
 	}
 
@@ -229,15 +247,16 @@ function showCard(event){
 }
 
 function startGameOnceAgain(){
-	//Initializing the timer Variables
+	//Initializing the timer variables
 	minutes = 0;
 	seconds = 0;
 	timerValue = 0;
 	timerDiv.textContent = "";
 	clearInterval(interval);
+	matchedCards = 0;
 	icons = shuffle(icons);
-	var listItems = document.querySelectorAll('.card i');
-
+	let listItems = document.querySelectorAll('.card i');
+	starsModal = 3;
 	openCards = [];
 
  //Getting all the cards list
@@ -276,22 +295,10 @@ playAgain.addEventListener('click',function(){
 function loadScores(){
 		let string = "<center><h2 class='main-heading'>LeaderBoard</h2></center>" + 
 		"<hr class='ruler'>";
-		console.log("Length of local " + localStorage.length)
 		for(let i=0;i<localStorage.length;i++){
 			let key = localStorage.key(i);
 			if(key !== "users"){
-			console.log("Keys " + key)
 			let val = localStorage.getItem(localStorage.key(i));
-			// let newDiv = document.createElement('div');
-			// newDiv.classList.add('user-list');
-			// let newSpan1 = document.createElement('span');
-			// let newSpan2 = document.createElement('span');
-			// newSpan1.textContent = "User - " + (i+1);
-			// newSpan2.textContent = "Moves: " + val;
-			// newDiv.append(newSpan1);
-			// newDiv.append(newSpan2);
-			// scoreboard.append(newDiv);
-
 			string += "<div class='user-list'>"+
 					"<span>User - "+ (i)+"</span>"+
 					"<span>Moves: "+ val+"</span>"+
@@ -328,7 +335,6 @@ overlay2.addEventListener('click',function(){
 	scoreboard.style.cssText = "width: 0px";
 	mainHeading.style.cssText = "visibility:hidden;";
 	ruler.style.cssText = "visibility: hidden;";
-	// hide.style.cssText = "visibility:hidden;";
 
 	//looping through all the scores
 	for(let i=0;i<userList.length;i++){
