@@ -15,3 +15,7 @@ A very friendly game built using javascript
 
 ## Contributions
 Anyone interested can easily contribute to the project and if found bug please let me know
+
+## Dependencies
+* FontAwesome used for icons
+* Google Fonts
